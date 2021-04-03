@@ -15,9 +15,10 @@ class QuestionListLoadingState extends QuestionState {
 }
 
 class QuestionsListLoadedState extends QuestionState {
+  final bool isSearch;
   final List<Question> questions;
 
-  QuestionsListLoadedState({required this.questions});
+  QuestionsListLoadedState({required this.questions, required this.isSearch});
   @override
   List<Object?> get props => [];
 }
@@ -38,4 +39,14 @@ class QuestionOpenProfilePageState extends QuestionState {
 
   @override
   List<Object?> get props => [user];
+}
+
+class VoteUpdated extends QuestionState {
+  final int index;
+  final Question question;
+
+  VoteUpdated({required this.index, required this.question});
+
+  @override
+  List<Object?> get props => [question];
 }

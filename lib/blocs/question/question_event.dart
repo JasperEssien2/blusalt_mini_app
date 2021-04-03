@@ -22,11 +22,15 @@ class QuestionOpenProfilePage extends QuestionEvent {
 }
 
 class VoteQuestion extends QuestionEvent {
-  final String questionId;
+  final int questionIndex;
+  final Question question;
   final String voteAction;
 
-  VoteQuestion({required this.questionId, required this.voteAction});
+  VoteQuestion(
+      {required this.question,
+      required this.voteAction,
+      required this.questionIndex});
 
   @override
-  List<Object?> get props => [questionId];
+  List<Object?> get props => [question];
 }
