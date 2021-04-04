@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart' as colors;
 
 ThemeData appTheme(BuildContext context, bool isDarkMode) {
+  SizeConfig.init(context);
   return ThemeData(
     primaryColor: colors.appbarEndGradient,
     accentColor: colors.accentColor,
     scaffoldBackgroundColor:
         isDarkMode ? colors.appBackgroundColorDark : colors.appBackgroundColor,
     cardColor: isDarkMode ? colors.cardColorDark : colors.cardColor,
+
     appBarTheme: AppBarTheme(
       color: isDarkMode
           ? colors.appBackgroundColorDark

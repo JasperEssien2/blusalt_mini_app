@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-const Color accentColor = Color(0xFFE88D72);
-Color accentColorLight = Color(0xFFE88D72).withOpacity(0.3);
+const Color accentColor = Color(0xFF6078EA);
+Color accentColorLight = Color(0xFF6078EA).withOpacity(0.3);
 
-const Color appbarEndGradient = Color(0xFF543855);
-const Color appbarStartGradient = Color(0xFFE88D72);
+const Color appbarEndGradient = Color(0xFF6078EA);
+const Color appbarStartGradient = Color(0xFF17EAD9);
 
 const Color appLightGrey = Color(0xFFBDBDBD);
 const Color appDivider = Color(0xFFBDBDBD);
@@ -21,12 +22,24 @@ const Color secondaryTextDark = Color(0xFFb3b3b3);
 const Color appLightGreyDark = Color(0xff404040);
 
 extension ColorSchemeX on ColorScheme {
-  Color get primaryTextColorScheme =>
-      brightness == Brightness.light ? primaryText : primaryTextDark;
+  Color get primaryTextColorScheme {
+    print(
+        'BRIGHTNESS ------------------------ mode is light: ${SchedulerBinding.instance!.window.platformBrightness == Brightness.light}');
+    return SchedulerBinding.instance!.window.platformBrightness ==
+            Brightness.light
+        ? primaryText
+        : primaryTextDark;
+  }
 
-  Color get secondaryTextColorScheme =>
-      brightness == Brightness.light ? secondaryText : secondaryTextDark;
+  Color get secondaryTextColorScheme {
+    return SchedulerBinding.instance!.window.platformBrightness ==
+            Brightness.light
+        ? secondaryText
+        : secondaryTextDark;
+  }
 
   Color get dividerColorScheme =>
-      brightness == Brightness.light ? appDivider : appDividerDark;
+      SchedulerBinding.instance!.window.platformBrightness == Brightness.light
+          ? appDivider
+          : appDividerDark;
 }

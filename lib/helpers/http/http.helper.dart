@@ -12,7 +12,7 @@ class HttpHelper {
   static Future<Dio> _getInstance() async {
     final storageToken = await StorageHelper.getString(StorageKeys.token);
 
-    if (_client == null) _client = injector.get<Dio>();
+    if (_client == null) _client = await injector.getAsync<Dio>();
 
     Map<String, dynamic> headers = {};
     headers['Content-Type'] = 'application/json';

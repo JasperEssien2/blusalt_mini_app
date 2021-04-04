@@ -4,6 +4,11 @@ abstract class LoginState extends Equatable {
   const LoginState();
 }
 
+class LoginEnableButton extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
+
 class LoginInitial extends LoginState {
   @override
   List<Object> get props => [];

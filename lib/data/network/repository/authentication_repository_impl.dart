@@ -1,10 +1,9 @@
 import 'package:blusalt_mini_app/data/network/model/request_models/signup_body.dart';
 import 'package:blusalt_mini_app/data/network/model/state.dart';
 import 'package:blusalt_mini_app/data/network/service/authentication/authentication_service.dart';
-import 'package:blusalt_mini_app/data/network/service/authentication/authentication_service_impl.dart';
 
 class AuthenticationRepositoryImpl extends AuthenticationService {
-  final AuthenticationServiceImpl authenticationService;
+  final AuthenticationService authenticationService;
 
   AuthenticationRepositoryImpl({required this.authenticationService});
 

@@ -43,10 +43,7 @@ class SimplifyApiConsuming {
       print('error --------------------- ${error.toString()}');
       return RequestState<ServerErrorModel>.error(
         ServerErrorModel(
-            statusCode: 400,
-            errorMessage:
-                error.toString() ?? "Something went wrong please try again",
-            data: null),
+            statusCode: 400, errorMessage: error.toString(), data: null),
       );
     }
   }

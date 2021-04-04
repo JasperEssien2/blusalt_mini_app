@@ -30,7 +30,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
   Future<RequestState> signUp(SignupBody body) {
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
       () => helper.post(
-        authenticationEndpoint.signIn,
+        authenticationEndpoint.signUp,
         body: body.toJson(),
       ),
       statusCodeSuccess: 201,
