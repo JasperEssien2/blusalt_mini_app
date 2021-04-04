@@ -23,8 +23,6 @@ const Color appLightGreyDark = Color(0xff404040);
 
 extension ColorSchemeX on ColorScheme {
   Color get primaryTextColorScheme {
-    print(
-        'BRIGHTNESS ------------------------ mode is light: ${SchedulerBinding.instance!.window.platformBrightness == Brightness.light}');
     return SchedulerBinding.instance!.window.platformBrightness ==
             Brightness.light
         ? primaryText

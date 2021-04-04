@@ -1,6 +1,6 @@
 import 'package:blusalt_mini_app/data/network/model/state.dart';
 
-abstract class QuestionService {
+abstract class AbstractQuestionService {
   Future<RequestState> postQuestion(String question);
 
   Future<RequestState> getQuestions();

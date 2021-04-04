@@ -12,6 +12,7 @@ class SizeConfig {
   static late double blockSizeVertical;
 
   static late double textSize16;
+  static late double textSize18;
   static late double textSize30;
   static late double textSize13;
   static late double textSize14;
@@ -21,6 +22,7 @@ class SizeConfig {
   static late double height100;
   static late double height90;
   static late double heightSize24;
+  static late double heightSize30;
 
   static late double widthSize25;
   static late double widthSize24;
@@ -61,7 +63,8 @@ class SizeConfig {
 
   static void _initTextSizes() {
     textSize12 = calculatePercentageWidth(0.0292);
-    textSize16 = calculatePercentageWidth(0.045);
+    textSize16 = calculatePercentageWidth(0.039);
+    textSize18 = calculatePercentageWidth(0.045);
     textSize22 = calculatePercentageWidth(0.054);
     textSize30 = calculatePercentageWidth(0.073);
     textSize14 = calculatePercentageWidth(0.0342);
@@ -73,6 +76,7 @@ class SizeConfig {
     height100 = calculatePercentageHeight(0.112);
     height90 = calculatePercentageHeight(0.101);
     heightSize24 = calculatePercentageHeight(0.02675);
+    heightSize30 = calculatePercentageHeight(0.034);
 
     widthSize24 = calculatePercentageWidth(0.059);
     widthSize90 = calculatePercentageWidth(0.219);

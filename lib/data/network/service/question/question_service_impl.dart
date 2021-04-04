@@ -5,7 +5,7 @@ import 'package:blusalt_mini_app/data/network/model/state.dart';
 import 'package:blusalt_mini_app/data/network/service/question/question_service.dart';
 import 'package:blusalt_mini_app/helpers/http/http.helper.dart';
 
-class QuestionServiceImpl implements QuestionService {
+class QuestionServiceImpl implements AbstractQuestionService {
   final HttpHelper helper;
 
   QuestionServiceImpl({required this.helper});

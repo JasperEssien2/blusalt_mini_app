@@ -5,7 +5,7 @@ import 'package:blusalt_mini_app/data/network/model/user_response.dart';
 import 'package:blusalt_mini_app/data/network/service/user/user_service.dart';
 import 'package:blusalt_mini_app/helpers/http/http.helper.dart';
 
-class UserServiceImpl extends UserService {
+class UserServiceImpl extends AbstractUserService {
   final HttpHelper helper;
 
   UserServiceImpl({required this.helper});
@@ -15,8 +15,8 @@ class UserServiceImpl extends UserService {
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
       () => helper.get(authenticationEndpoint.searchUser + '?keywords=$email'),
       successResponse: (data) {
-        List<UserResponse> userList =
-            data.map((json) => UserResponse.fromJson(json)).toList();
+        List<UserResponse> userList = List<UserResponse>.from(
+            data.map((json) => UserResponse.fromJson(json)).toList());
         if (userList.isNotEmpty) return RequestState.success(userList[0]);
         return RequestState.success(
           getDummyUser()

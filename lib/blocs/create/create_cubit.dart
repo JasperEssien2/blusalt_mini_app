@@ -23,7 +23,7 @@ class CreateCubit extends Cubit<CreateState> {
 
   void create(String questionId, bool isAnswer) async {
     emit(CreateLoadingState());
-    createUIModel.toggleLoadingStatus(true);
+    createUIModel.setLoadingStatus(true);
     RequestState requestState =
         await _makeRequestToCreate(questionId, isAnswer);
     if (requestState is SuccessState) {
@@ -31,7 +31,7 @@ class CreateCubit extends Cubit<CreateState> {
       _updateUIOnRequestSuccess();
     } else if (requestState is ErrorState) {
       emit(CreateErrorState(errorModel: requestState.value));
-      createUIModel.toggleLoadingStatus(false);
+      createUIModel.setLoadingStatus(false);
     }
     emit(CreateInitial());
   }
@@ -49,7 +49,7 @@ class CreateCubit extends Cubit<CreateState> {
   }
 
   void _updateUIOnRequestSuccess() {
-    createUIModel.toggleLoadingStatus(false);
+    createUIModel.setLoadingStatus(false);
     createUIModel.setText('');
   }
 }

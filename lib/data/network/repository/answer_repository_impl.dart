@@ -1,9 +1,8 @@
 import 'package:blusalt_mini_app/data/network/model/state.dart';
 import 'package:blusalt_mini_app/data/network/service/answer/answer_service.dart';
-import 'package:blusalt_mini_app/data/network/service/answer/answer_service_impl.dart';
 
 class AnswerRepository implements AnswerService {
-  final AnswerServiceImpl answerService;
+  final AnswerService answerService;
 
   AnswerRepository({required this.answerService});
   @override

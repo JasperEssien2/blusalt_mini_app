@@ -31,18 +31,21 @@ Future<void> init(GetIt injector) async {
       String? token = await StorageHelper.getString(StorageKeys.token);
       var dummyUser = getDummyUser()
           .copyWith(id: 'anonymous', firstname: 'Anonymous', lastname: '');
-      if (token == null)
+      if (token == null) {
         return dummyUser;
-      else {
+      } else {
         return await _makeRequestToGetUser(injector, token, dummyUser);
       }
     },
   );
 }
 
-Future _makeRequestToGetUser(
+Future<UserResponse> _makeRequestToGetUser(
     GetIt injector, String token, UserResponse dummyUser) async {
-  RequestState response = await injector.get<UserService>().getUser(token);
+  RequestState response =
+      await injector.get<AbstractUserService>().getUser(token);
+  print(
+      'MAKE REQUEST TO GET USER -------------------- RESPONSE: ${response.toString()}');
   if (response is SuccessState)
     return response.value;
   else if (response is ErrorState) {

@@ -4,6 +4,11 @@ abstract class SignUpState extends Equatable {
   const SignUpState();
 }
 
+class SignUpEnableButton extends SignUpState {
+  @override
+  List<Object> get props => [];
+}
+
 class SignUpInitial extends SignUpState {
   @override
   List<Object> get props => [];

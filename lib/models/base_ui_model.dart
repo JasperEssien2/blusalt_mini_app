@@ -6,7 +6,7 @@ abstract class BaseUIModel {
 
   bool get useShimmerEffect => _useShimmerEffect;
 
-  void toggleLoadingStatus(bool showLoad, {bool useShimmerEffect = true}) {
+  void setLoadingStatus(bool showLoad, {bool useShimmerEffect = true}) {
     _isLoading = showLoad;
     _useShimmerEffect = useShimmerEffect;
   }

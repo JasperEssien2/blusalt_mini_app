@@ -32,13 +32,13 @@ class AnswerListBloc extends Bloc<AnswerListEvent, AnswerListState> {
   Stream<AnswerListState> _mapLoadAnswerListToState(
       LoadAnswerList event) async* {
     yield AnswerListLoadingState();
-    model.toggleLoadingStatus(true);
+    model.setLoadingStatus(true);
     RequestState requestState = await _makeLoadAnswersRequest(event);
     if (requestState is SuccessState)
       yield AnswerListLoadedState(answers: requestState.value);
     else if (requestState is ErrorState)
       yield AnswerListErrorState(errorModel: requestState.value);
-    model.toggleLoadingStatus(false);
+    model.setLoadingStatus(false);
     yield AnswerListInitial();
   }
 

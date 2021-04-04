@@ -16,6 +16,8 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
   final QuestionRepositoryImpl repository;
   QuestionBloc({required this.repository}) : super(QuestionInitial());
   final LoadingUIModel model = LoadingUIModel();
+  final List<Question> questions = [];
+
   @override
   Stream<QuestionState> mapEventToState(
     QuestionEvent event,
@@ -31,14 +33,15 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
   Stream<QuestionState> _mapLoadQuestionListToEvent(
       LoadQuestionList event) async* {
     yield QuestionListLoadingState();
-    model.toggleLoadingStatus(true);
+    model.setLoadingStatus(true);
     RequestState requestState = await _makeQuestionListRequest(event);
-    if (requestState is SuccessState)
+    if (requestState is SuccessState) {
+      questions.addAll(requestState.value);
       yield QuestionsListLoadedState(
           questions: requestState.value, isSearch: event.searchQuery != null);
-    else if (requestState is ErrorState)
+    } else if (requestState is ErrorState)
       yield QuestionListErrorState(errorModel: requestState.value);
-    model.toggleLoadingStatus(false);
+    model.setLoadingStatus(false);
     yield QuestionInitial();
   }
 

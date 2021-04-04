@@ -32,6 +32,7 @@ class DialogCreate extends StatelessWidget {
           child: Container(
             height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width - 32,
+            color: Theme.of(context).cardColor,
             margin: EdgeInsets.symmetric(
               vertical: SizeConfig.paddingSizeVertical8,
               horizontal: SizeConfig.paddingSizeHorizontal16,

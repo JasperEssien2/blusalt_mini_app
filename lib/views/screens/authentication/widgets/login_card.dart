@@ -162,17 +162,4 @@ class _LoginCardState extends State<LoginCard> {
   double _getPaddingBetweenButtonAndLastEditText() =>
       SizeConfig.paddingSizeVertical20 + SizeConfig.paddingSizeVertical12;
 
-  _isEnabled(BuildContext context) {
-    print(
-        'IS ENABLED: ${(context.watch<LoginCubit>().model.signupBody.password.trim().isNotEmpty && context.watch<LoginCubit>().model.signupBody.email.trim().isNotEmpty)}');
-    if (context.watch<LoginCubit>().model.isLoading) return false;
-    return (context
-            .watch<LoginCubit>()
-            .model
-            .signupBody
-            .password
-            .trim()
-            .isNotEmpty &&
-        context.watch<LoginCubit>().model.signupBody.email.trim().isNotEmpty);
-  }
 }

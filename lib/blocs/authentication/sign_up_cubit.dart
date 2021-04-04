@@ -6,30 +6,59 @@ import 'package:blusalt_mini_app/data/network/repository/authentication_reposito
 import 'package:blusalt_mini_app/di/injector_container.dart';
 import 'package:blusalt_mini_app/helpers/storage/storage.helper.dart';
 import 'package:blusalt_mini_app/helpers/storage/storage.keys.dart';
-import 'package:blusalt_mini_app/models/state_changes_model/loading_ui_model.dart';
+import 'package:blusalt_mini_app/models/state_changes_model/authentication_ui_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   final AuthenticationRepositoryImpl repository;
-  final LoadingUIModel model = LoadingUIModel();
-  SignUpCubit({required this.repository}) : super(SignUpInitial());
+  final AuthenticationUIModel model;
+  SignUpCubit({required this.repository, required this.model})
+      : super(SignUpInitial());
 
-  void login(SignupBody body) async {
+  void signUp() async {
     emit(SignUpLoadingState());
-    model.toggleLoadingStatus(true);
-    RequestState requestState = await repository.signUp(body);
+    model.setLoadingStatus(true);
+    RequestState requestState = await repository.signUp(model.signupBody);
     if (requestState is SuccessState) {
       injector.pushNewScope(scopeName: registeredUserScope);
       StorageHelper.setString(StorageKeys.token, requestState.value);
       emit(SignUpSuccessfulState());
       emit(SignUpInitial());
-      model.toggleLoadingStatus(false);
+      model.setLoadingStatus(false);
     } else if (requestState is ErrorState) {
       emit(SignUpErrorState(errorModel: requestState.value));
       emit(SignUpInitial());
-      model.toggleLoadingStatus(false);
+      model.setLoadingStatus(false);
     }
+  }
+
+  void updateSignUpBodyModel(SignupBody signupBody) {
+    this.model.signupBody = signupBody;
+    _updateButtonEnableField();
+  }
+
+  void _updateButtonEnableField() {
+    if (model.isLoading)
+      model.isButtonEnabled = false;
+    else {
+      if (_neccessaryFieldsNotEmpty())
+        model.isButtonEnabled = true;
+      else {
+        model.isButtonEnabled = false;
+      }
+    }
+    emit(SignUpEnableButton());
+    emit(SignUpInitial());
+  }
+
+  bool _neccessaryFieldsNotEmpty() {
+    return model.signupBody.email.trim().isNotEmpty &&
+        model.signupBody.password.trim().isNotEmpty &&
+        (model.signupBody.cPassword.trim() ==
+            model.signupBody.password.trim()) &&
+        model.signupBody.firstname.trim().isNotEmpty &&
+        model.signupBody.lastname.trim().isNotEmpty;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import 'bloc/bloc_module.dart' as blocModule;
+import 'models/model_module.dart' as modelModule;
 import 'network/network_module.dart' as networkModule;
 import 'repositories/repository_module.dart' as repositoryModule;
 import 'service/service_module.dart' as serviceModule;
@@ -13,6 +14,7 @@ Future<void> init() async {
   blocModule.init(injector);
   repositoryModule.init(injector);
   networkModule.init(injector);
+  modelModule.init(injector);
 }
 
 //This pushes a new scope when a user has successfully sign in

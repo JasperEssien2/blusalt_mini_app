@@ -9,13 +9,13 @@ import 'package:blusalt_mini_app/data/network/service/user/user_service_impl.dar
 import 'package:get_it/get_it.dart';
 
 Future<void> init(GetIt injector) async {
-  injector.registerLazySingleton<UserService>(
+  injector.registerLazySingleton<AbstractUserService>(
       () => UserServiceImpl(helper: injector.get()));
 
   injector.registerLazySingleton<AuthenticationService>(
       () => AuthenticationServiceImpl(helper: injector.get()));
 
-  injector.registerLazySingleton<QuestionService>(
+  injector.registerLazySingleton<AbstractQuestionService>(
       () => QuestionServiceImpl(helper: injector.get()));
 
   injector.registerLazySingleton<AnswerService>(

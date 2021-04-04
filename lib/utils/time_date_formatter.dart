@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import 'intl_util.dart';
+
 ///Contains all method related to date formatting
 class TimeDateFormatter {
   ///This method parse a string date to a [DateTime] object,
@@ -62,6 +64,36 @@ class TimeDateFormatter {
     } else {
       return "No Experience";
     }
+  }
+
+  static String getDateAgo(String stringDate) {
+    DateTime dateTime = parseStringDate(stringDate);
+    if (isToday(dateTime))
+      return 'Today';
+    else if (isYesterday(dateTime))
+      return 'Yesterday';
+    else
+      return IntlUtil.formatDateMedium(stringDate, displayTime: false);
+  }
+
+  static bool isToday(DateTime dateTime) {
+    DateTime today = DateTime.now();
+    if (dateTime.day == today.day &&
+        dateTime.month == today.month &&
+        dateTime.year == today.year)
+      return true;
+    else
+      return false;
+  }
+
+  static bool isYesterday(DateTime dateTime) {
+    DateTime yesterday = DateTime.now().subtract(Duration(days: 1));
+    if (dateTime.day == yesterday.day &&
+        dateTime.month == yesterday.month &&
+        dateTime.year == yesterday.year)
+      return true;
+    else
+      return false;
   }
 }
 

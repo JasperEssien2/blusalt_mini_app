@@ -19,7 +19,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   void login() async {
     emit(LoginLoadingState());
-    model.toggleLoadingStatus(true);
+    model.setLoadingStatus(true);
     RequestState requestState = await repository.signIn(
         model.signupBody.email, model.signupBody.password);
     if (requestState is SuccessState) {
@@ -27,11 +27,11 @@ class LoginCubit extends Cubit<LoginState> {
       StorageHelper.setString(StorageKeys.token, requestState.value);
       emit(LoginSuccessfulState());
       emit(LoginInitial());
-      model.toggleLoadingStatus(false);
+      model.setLoadingStatus(false);
     } else if (requestState is ErrorState) {
       emit(LoginErrorState(errorModel: requestState.value));
       emit(LoginInitial());
-      model.toggleLoadingStatus(false);
+      model.setLoadingStatus(false);
     }
   }
 
@@ -58,7 +58,5 @@ class LoginCubit extends Cubit<LoginState> {
     }
     emit(LoginEnableButton());
     emit(LoginInitial());
-    print(
-        'IS EMAIL AND PASSWORD IS NOT EMPTY: ${(model.signupBody.email.trim().isNotEmpty && model.signupBody.password.trim().isNotEmpty)}');
   }
 }

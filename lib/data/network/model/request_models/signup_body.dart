@@ -22,4 +22,20 @@ class SignupBody {
     map["lastname"] = lastname;
     return map;
   }
+
+  SignupBody copyWith({
+    String? email,
+    String? password,
+    String? cPassword,
+    String? firstname,
+    String? lastname,
+  }) {
+    return new SignupBody(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      cPassword: cPassword ?? this.cPassword,
+      firstname: firstname ?? this.firstname,
+      lastname: lastname ?? this.lastname,
+    );
+  }
 }

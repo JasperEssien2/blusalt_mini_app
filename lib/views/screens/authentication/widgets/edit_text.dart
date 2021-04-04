@@ -19,7 +19,7 @@ class CustomEditText extends StatelessWidget {
   Widget build(BuildContext context) {
     var primaryTextColorScheme2 =
         Theme.of(context).colorScheme.primaryTextColorScheme;
-    print('EDIT_TEXT PRIMARY color: ${primaryTextColorScheme2}');
+
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(
