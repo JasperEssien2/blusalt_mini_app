@@ -147,8 +147,6 @@ class _LoginCardState extends State<LoginCard> {
 
   void _handleStateChange(LoginState state, BuildContext context) {
     if (state is LoginSuccessfulState) {
-      StorageHelper.setString(
-          StorageKeys.token, context.read<LoginCubit>().model.signupBody.email);
       Navigator.popAndPushNamed(context, Routes.homePage);
     } else if (state is LoginErrorState) {
       Fluttertoast.showToast(msg: '${state.errorModel.errorMessage}');

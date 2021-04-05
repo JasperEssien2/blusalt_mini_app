@@ -3,7 +3,6 @@ import 'package:blusalt_mini_app/blocs/user/user_bloc_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/question.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
 import 'package:blusalt_mini_app/styles/colors.dart';
-import 'package:blusalt_mini_app/utils/app_util.dart';
 import 'package:blusalt_mini_app/utils/image_util.dart';
 import 'package:blusalt_mini_app/utils/size_config_util.dart';
 import 'package:blusalt_mini_app/utils/time_date_formatter.dart';
@@ -132,8 +131,11 @@ class ItemQuestion extends StatelessWidget {
                               children: [
                                 InkWell(
                                   customBorder: CircleBorder(),
-                                  onTap: () => _voteQuestion(
-                                      context: context, voteAction: 'up'),
+                                  onTap: () => injector.get<QuestionBloc>().add(
+                                      VoteQuestion(
+                                          question: question,
+                                          voteAction: 'up',
+                                          questionIndex: index)),
                                   child: Container(
                                     height: 20.0,
                                     width: 20.0,
@@ -160,8 +162,11 @@ class ItemQuestion extends StatelessWidget {
                                 ),
                                 InkWell(
                                   customBorder: CircleBorder(),
-                                  onTap: () => _voteQuestion(
-                                      context: context, voteAction: 'down'),
+                                  onTap: () => injector.get<QuestionBloc>().add(
+                                      VoteQuestion(
+                                          question: question,
+                                          voteAction: 'up',
+                                          questionIndex: index)),
                                   child: Container(
                                     height: 20.0,
                                     width: 20.0,
@@ -192,29 +197,6 @@ class ItemQuestion extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void _voteQuestion(
-      {required BuildContext context, required String voteAction}) {
-    if (injector.get<UserBlocCubit>().response.id == 'anonymous') {
-      _showNotAuthenticatedDialog(context);
-    }
-    injector.get<QuestionBloc>().add(VoteQuestion(
-        question: question, voteAction: voteAction, questionIndex: index));
-  }
-
-  void _showNotAuthenticatedDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        var textStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
-              color: Theme.of(context).colorScheme.secondaryTextColorScheme,
-              fontSize: SizeConfig.textSize18,
-              fontWeight: FontWeight.w500,
-            );
-        return AppUtil.authenticateDialog(context, textStyle);
-      },
     );
   }
 }

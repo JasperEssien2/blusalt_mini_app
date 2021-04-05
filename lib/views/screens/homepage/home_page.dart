@@ -2,6 +2,7 @@ import 'package:blusalt_mini_app/blocs/question/question_bloc.dart';
 import 'package:blusalt_mini_app/blocs/user/user_bloc_cubit.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
 import 'package:blusalt_mini_app/styles/colors.dart';
+import 'package:blusalt_mini_app/utils/app_util.dart';
 import 'package:blusalt_mini_app/utils/size_config_util.dart';
 import 'package:blusalt_mini_app/utils/time_date_formatter.dart';
 import 'package:blusalt_mini_app/views/components/dialog_create.dart';
@@ -62,34 +63,12 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500,
             );
         return injector.get<UserBlocCubit>().response.id == 'anonymous'
-            ? _authenticateDialog(textStyle)
+            ? AppUtil.authenticateDialog(context, textStyle)
             : DialogCreate(isAnswer: false);
       },
     );
   }
 
-  AlertDialog _authenticateDialog(TextStyle textStyle) {
-    return AlertDialog(
-      content: Text(
-        'Only authenticated users can create question, Authenticate?',
-        style: textStyle,
-      ),
-      actions: [
-        InkWell(
-          onTap: () {
-            Navigator.popAndPushNamed(context, Routes.authenticationPageLogin);
-          },
-          child: Text(
-            'OK',
-            style: textStyle.copyWith(
-              fontSize: SizeConfig.textSize16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        )
-      ],
-    );
-  }
 
   @override
   void initState() {

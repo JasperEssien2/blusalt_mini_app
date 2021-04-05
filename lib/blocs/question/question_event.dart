@@ -6,8 +6,9 @@ abstract class QuestionEvent extends Equatable {
 
 class LoadQuestionList extends QuestionEvent {
   final String? searchQuery;
+  final String? filterByUserId;
 
-  LoadQuestionList({this.searchQuery});
+  LoadQuestionList({this.searchQuery, this.filterByUserId});
 
   @override
   List<Object?> get props => [searchQuery];

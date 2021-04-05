@@ -17,6 +17,7 @@ class _Authentication {
   final signUp = Constants.baseUrl + '/user/signup';
   final signIn = Constants.baseUrl + '/user/signin';
   final searchUser = Constants.baseUrl + '/user/text/search';
+  final getUser = Constants.baseUrl + '/user/';
 }
 
 final authenticationEndpoint = _Authentication();

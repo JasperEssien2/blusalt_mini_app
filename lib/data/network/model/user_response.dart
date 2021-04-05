@@ -18,7 +18,7 @@ class UserResponse extends Equatable {
   });
 
   UserResponse.fromJson(dynamic json) {
-    id = json["_id"];
+    id = json["_id"] ?? json['userId'];
     email = json["email"];
     firstname = json["firstname"];
     lastname = json["lastname"];

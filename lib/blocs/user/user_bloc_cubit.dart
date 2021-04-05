@@ -18,13 +18,13 @@ class UserBlocCubit extends Cubit<UserBlocState> {
   final UserRepositoryImpl repository;
   UserBlocCubit({required this.repository}) : super(UserBlocInitial());
 
-  void getUser({String? userEmail}) async {
+  void getUser({String? id}) async {
     emit(UserLoading());
-    if (userEmail == null) {
+    if (id == null) {
       response = await injector.getAsync<UserResponse>();
       emit(UserGotten(user: response));
     } else {
-      RequestState requestState = await repository.getUser(userEmail);
+      RequestState requestState = await repository.getUser(id);
       if (requestState is SuccessState) {
         response = requestState.value;
         emit(UserGotten(user: requestState.value));

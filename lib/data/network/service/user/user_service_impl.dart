@@ -11,13 +11,12 @@ class UserServiceImpl extends AbstractUserService {
   UserServiceImpl({required this.helper});
 
   @override
-  Future<RequestState> getUser(String email) async {
+  Future<RequestState> getUser(String token) async {
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
-      () => helper.get(authenticationEndpoint.searchUser + '?keywords=$email'),
+      () => helper.get(authenticationEndpoint.getUser + '$token'),
       successResponse: (data) {
-        List<UserResponse> userList = List<UserResponse>.from(
-            data.map((json) => UserResponse.fromJson(json)).toList());
-        if (userList.isNotEmpty) return RequestState.success(userList[0]);
+        if (data != null)
+          return RequestState.success(UserResponse.fromJson(data));
         return RequestState.success(
           getDummyUser()
               .copyWith(id: 'anonymous', firstname: 'Anonymous', lastname: ''),

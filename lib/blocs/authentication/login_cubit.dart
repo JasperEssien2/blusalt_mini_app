@@ -24,7 +24,8 @@ class LoginCubit extends Cubit<LoginState> {
         model.signupBody.email, model.signupBody.password);
     if (requestState is SuccessState) {
       injector.pushNewScope(scopeName: registeredUserScope);
-      StorageHelper.setString(StorageKeys.token, requestState.value);
+      StorageHelper.setString(StorageKeys.token, requestState.value['token']);
+      StorageHelper.setString(StorageKeys.ID, requestState.value['id']);
       emit(LoginSuccessfulState());
       emit(LoginInitial());
       model.setLoadingStatus(false);

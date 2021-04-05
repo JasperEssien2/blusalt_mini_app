@@ -6,21 +6,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'item_question.dart';
+import 'item_answer.dart';
 
 class QuestionListView extends StatelessWidget {
   final String? filter;
-  final String? instance;
   const QuestionListView({
     Key? key,
     this.filter,
-    this.instance,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: injector.get<QuestionBloc>(instanceName: instance),
+    return BlocProvider(
+      create: (context) {
+        injector.resetLazySingleton(
+          instance: QuestionBloc,
+        );
+        injector.get<QuestionBloc>().add(LoadQuestionList());
+        return injector.get<QuestionBloc>();
+      },
       child: BlocConsumer<QuestionBloc, QuestionState>(
         listener: (context, state) {
           _handleStateListenerChange(state);

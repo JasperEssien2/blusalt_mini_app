@@ -13,11 +13,16 @@ Future<void> init(GetIt injector) async {
   injector
       .registerLazySingleton(() => QuestionBloc(repository: injector.get()));
 
+  injector.registerLazySingleton(() => QuestionBloc(repository: injector.get()),
+      instanceName: 'profile');
+
   injector.registerLazySingleton(
       () => LoginCubit(repository: injector.get(), model: injector.get()));
 
-  injector.registerLazySingleton(
-      () => SignUpCubit(repository: injector.get(), model: injector.get()));
+  injector.registerLazySingleton(() => SignUpCubit(
+      repository: injector.get(),
+      model: injector.get(),
+      loginCubit: injector.get()));
 
   injector.registerFactory(() => CreateCubit(
       answerRepository: injector.get(), questionRepository: injector.get()));

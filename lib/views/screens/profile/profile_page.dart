@@ -1,3 +1,4 @@
+import 'package:blusalt_mini_app/blocs/question/question_bloc.dart';
 import 'package:blusalt_mini_app/blocs/user/user_bloc_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/user_response.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
@@ -46,7 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 top: size.height * 0.35,
                 child: Container(
                   height: size.height * 0.6,
-                  child: QuestionListView(),
+                  child: QuestionListView(
+                    filter: user!.id,
+                    instance: 'profile',
+                  ),
                   width: size.width,
                 ),
               ),
@@ -62,6 +66,9 @@ class _ProfilePageState extends State<ProfilePage> {
   void didChangeDependencies() {
     user = (ModalRoute.of(context)!.settings.arguments as UserResponse);
     if (user == null) Navigator.pop(context);
+    injector
+        .get<QuestionBloc>(instanceName: 'profile')
+        .add(LoadQuestionList(filterByUserId: user!.id));
     super.didChangeDependencies();
   }
 }

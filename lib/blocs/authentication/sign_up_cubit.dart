@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:blusalt_mini_app/blocs/authentication/login_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/request_models/signup_body.dart';
 import 'package:blusalt_mini_app/data/network/model/server_error_model.dart';
 import 'package:blusalt_mini_app/data/network/model/state.dart';
 import 'package:blusalt_mini_app/data/network/repository/authentication_repository_impl.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
-import 'package:blusalt_mini_app/helpers/storage/storage.helper.dart';
-import 'package:blusalt_mini_app/helpers/storage/storage.keys.dart';
 import 'package:blusalt_mini_app/models/state_changes_model/authentication_ui_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,7 +13,9 @@ part 'sign_up_state.dart';
 class SignUpCubit extends Cubit<SignUpState> {
   final AuthenticationRepositoryImpl repository;
   final AuthenticationUIModel model;
-  SignUpCubit({required this.repository, required this.model})
+  final LoginCubit loginCubit;
+  SignUpCubit(
+      {required this.repository, required this.model, required this.loginCubit})
       : super(SignUpInitial());
 
   void signUp() async {
@@ -23,7 +24,8 @@ class SignUpCubit extends Cubit<SignUpState> {
     RequestState requestState = await repository.signUp(model.signupBody);
     if (requestState is SuccessState) {
       injector.pushNewScope(scopeName: registeredUserScope);
-      StorageHelper.setString(StorageKeys.token, requestState.value);
+      _login();
+
       emit(SignUpSuccessfulState());
       emit(SignUpInitial());
       model.setLoadingStatus(false);
@@ -32,6 +34,11 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(SignUpInitial());
       model.setLoadingStatus(false);
     }
+  }
+
+  _login() {
+    loginCubit.model.signupBody = model.signupBody;
+    loginCubit.login();
   }
 
   void updateSignUpBodyModel(SignupBody signupBody) {

@@ -15,8 +15,7 @@ Future<void> init(GetIt injector) async {
 
       Map<String, dynamic> headers = {};
       headers['Content-Type'] = 'application/json';
-      if (storageToken != null)
-        headers['Authorization'] = 'Bearer $storageToken';
+      if (storageToken != null) headers['Authorization'] = '$storageToken';
 
       dioClient.options.headers = headers;
 
@@ -28,22 +27,21 @@ Future<void> init(GetIt injector) async {
 
   injector.registerFactoryAsync<UserResponse>(
     () async {
-      String? token = await StorageHelper.getString(StorageKeys.token);
+      String? id = await StorageHelper.getString(StorageKeys.token);
       var dummyUser = getDummyUser()
           .copyWith(id: 'anonymous', firstname: 'Anonymous', lastname: '');
-      if (token == null) {
+      if (id == null) {
         return dummyUser;
       } else {
-        return await _makeRequestToGetUser(injector, token, dummyUser);
+        return await _makeRequestToGetUser(injector, id, dummyUser);
       }
     },
   );
 }
 
 Future<UserResponse> _makeRequestToGetUser(
-    GetIt injector, String token, UserResponse dummyUser) async {
-  RequestState response =
-      await injector.get<AbstractUserService>().getUser(token);
+    GetIt injector, String id, UserResponse dummyUser) async {
+  RequestState response = await injector.get<AbstractUserService>().getUser(id);
   print(
       'MAKE REQUEST TO GET USER -------------------- RESPONSE: ${response.toString()}');
   if (response is SuccessState)
