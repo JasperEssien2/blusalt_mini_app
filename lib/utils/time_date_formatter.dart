@@ -8,7 +8,7 @@ class TimeDateFormatter {
   ///@Param [stringDate] the date in string format to parse, input format is [yyyy-MM-DDTHH:MM aa]
   ///@Param [returnWithAmOrPM] if this is true it parses considering the time of day
   static DateTime parseStringDate(String stringDate,
-      {bool returnWithAmOrPM = true, bool is24Hours = true}) {
+      {bool returnWithAmOrPM = false, bool is24Hours = true}) {
     var parsedDate = is24Hours
         ? DateFormat(
             returnWithAmOrPM ? "yyyy-MM-dd'T'HH:mm a" : "yyyy-MM-dd'T'HH:mm")
@@ -73,7 +73,7 @@ class TimeDateFormatter {
     else if (isYesterday(dateTime))
       return 'Yesterday';
     else
-      return IntlUtil.formatDateMedium(stringDate, displayTime: false);
+      return IntlUtil.formatDateMedium(dateTime, displayTime: true);
   }
 
   static bool isToday(DateTime dateTime) {

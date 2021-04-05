@@ -9,6 +9,11 @@ class CreateInitial extends CreateState {
   List<Object> get props => [];
 }
 
+class UpdateUIState extends CreateState {
+  @override
+  List<Object?> get props => [];
+}
+
 class CreateLoadingState extends CreateState {
   @override
   List<Object?> get props => [];

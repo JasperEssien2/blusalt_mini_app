@@ -37,7 +37,7 @@ class SimplifyApiConsuming {
             data: null),
       );
     } on DioError catch (e) {
-      print("dio error request is ${e.response}");
+      print("dio error request is ${e}");
       return _returnDioError(dioErrorResponse, e);
     } catch (error) {
       print('error --------------------- ${error.toString()}');
@@ -54,7 +54,6 @@ class SimplifyApiConsuming {
       int statusCodeSuccess,
       RequestState successResponse(dynamic data)) async {
     var response = await requestFunction();
-
     if (isStatusCode) {
       return _handleResponseBasedOnStatusCode(
           response, statusCodeSuccess, successResponse);
@@ -66,7 +65,10 @@ class SimplifyApiConsuming {
   static RequestState _handleResponseBasedOnStatusCode(Response response,
       int statusCodeSuccess, RequestState successResponse(dynamic data)) {
     if (response.statusCode == statusCodeSuccess) {
-      return successResponse(response.data['data']);
+      if (response.data.containsKey('data'))
+        return successResponse(response.data['data']);
+      else
+        return successResponse(response.data);
     } else {
       return RequestState<ServerErrorModel>.error(
         ServerErrorModel(

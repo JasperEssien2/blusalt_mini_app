@@ -4,7 +4,7 @@ class _Question {
   final askQuestion = Constants.baseUrl + '/question';
   final questionList = Constants.baseUrl + '/question';
   final searchQuestion = Constants.baseUrl + '/user/text/search';
-  final voteQuote = Constants.baseUrl = '/question/vote';
+  final voteQuote = Constants.baseUrl + '/question/vote';
 }
 
 class _Answer {

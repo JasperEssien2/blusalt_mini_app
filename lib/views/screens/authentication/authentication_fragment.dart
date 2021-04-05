@@ -1,5 +1,6 @@
 import 'package:blusalt_mini_app/styles/colors.dart';
 import 'package:blusalt_mini_app/utils/size_config_util.dart';
+import 'package:blusalt_mini_app/views/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -54,13 +55,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   top: 40.0,
                   right: 16.0,
                 ),
-                child: Text(
-                  'Skip',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: SizeConfig.textSize16,
-                        color: Colors.white,
-                      ),
+                child: InkWell(
+                  onTap: () =>
+                      Navigator.popAndPushNamed(context, Routes.homePage),
+                  child: Text(
+                    'Skip',
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: SizeConfig.textSize16,
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
               ),
             )

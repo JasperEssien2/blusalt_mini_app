@@ -12,7 +12,8 @@ ThemeData appTheme(BuildContext context, bool isDarkMode) {
     scaffoldBackgroundColor:
         isDarkMode ? colors.appBackgroundColorDark : colors.appBackgroundColor,
     cardColor: isDarkMode ? colors.cardColorDark : colors.cardColor,
-
+    dialogTheme: DialogTheme(backgroundColor: Theme.of(context).cardColor),
+    dialogBackgroundColor: Theme.of(context).cardColor,
     appBarTheme: AppBarTheme(
       color: isDarkMode
           ? colors.appBackgroundColorDark

@@ -55,9 +55,11 @@ class QuestionServiceImpl implements AbstractQuestionService {
 
   @override
   Future<RequestState> voteQuestion(String questionId, String voteAction) {
+    print(
+        'VOTE URL ------------ ${questionEnpoint.voteQuote + '?questionId=$questionId&vote=$voteAction'}');
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
       () => helper.get(
-        questionEnpoint.voteQuote + '?questionId=$questionId&vote$voteAction',
+        questionEnpoint.voteQuote + '?questionId=$questionId&vote=$voteAction',
       ),
       successResponse: (data) {
         return RequestState.success(data); // returns user's token

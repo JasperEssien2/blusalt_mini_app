@@ -27,6 +27,7 @@ class DialogCreate extends StatelessWidget {
           _handleListenerStateChanges(state);
         },
         builder: (context, state) => Dialog(
+          backgroundColor: Theme.of(context).cardColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
           child: Container(
@@ -90,15 +91,14 @@ class DialogCreate extends StatelessWidget {
                             Theme.of(context).textTheme.bodyText2!.copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .secondaryTextColorScheme
-                                      .withOpacity(0.7),
+                                      .primaryTextColorScheme,
                                   fontWeight: FontWeight.w700,
                                 ),
                         helperStyle:
                             Theme.of(context).textTheme.bodyText2!.copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .primaryTextColorScheme,
+                                      .secondaryTextColorScheme,
                                   fontWeight: FontWeight.w700,
                                 ),
                         focusColor: accentColor,

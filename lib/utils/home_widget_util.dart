@@ -28,11 +28,8 @@ class HomeWidgetUtil {
     }
 
     if (stayLoggedIn) {
-      if (userResponse.id == 'anonymous') {
-        defaultHome = HomePage();
-      } else {
-        defaultHome = AuthenticationPage(child: loginCard);
-      }
+      print('STAY LOGGED IN ------------ ');
+      defaultHome = HomePage();
     }
 
     return defaultHome;

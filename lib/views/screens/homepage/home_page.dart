@@ -6,6 +6,7 @@ import 'package:blusalt_mini_app/utils/size_config_util.dart';
 import 'package:blusalt_mini_app/utils/time_date_formatter.dart';
 import 'package:blusalt_mini_app/views/components/dialog_create.dart';
 import 'package:blusalt_mini_app/views/components/item_appbar.dart';
+import 'package:blusalt_mini_app/views/routes/routes.dart';
 import 'package:blusalt_mini_app/views/screens/question/widgets/item_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -56,7 +57,39 @@ class _HomePageState extends State<HomePage> {
   void _showAddQuestionDialog() {
     showDialog(
       context: context,
-      builder: (context) => DialogCreate(isAnswer: false),
+      builder: (context) {
+        var textStyle = Theme.of(context).textTheme.bodyText2!.copyWith(
+              color: Theme.of(context).colorScheme.secondaryTextColorScheme,
+              fontSize: SizeConfig.textSize18,
+              fontWeight: FontWeight.w500,
+            );
+        return injector.get<UserBlocCubit>().response.id == 'anonymous'
+            ? _authenticateDialog(textStyle)
+            : DialogCreate(isAnswer: false);
+      },
+    );
+  }
+
+  AlertDialog _authenticateDialog(TextStyle textStyle) {
+    return AlertDialog(
+      content: Text(
+        'Only authenticated users can create question, Authenticate?',
+        style: textStyle,
+      ),
+      actions: [
+        InkWell(
+          onTap: () {
+            Navigator.popAndPushNamed(context, Routes.authenticationPageLogin);
+          },
+          child: Text(
+            'OK',
+            style: textStyle.copyWith(
+              fontSize: SizeConfig.textSize16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -87,19 +120,22 @@ class QuestionListView extends StatelessWidget {
             return context.watch<QuestionBloc>().model.isLoading
                 ? Shimmer.fromColors(
                     child: ItemQuestionShimmer(),
-                    baseColor: Colors.grey[300]!,
+                    baseColor: Colors.grey,
                     highlightColor: Colors.grey[100]!,
                     enabled: true,
                   )
                 : ItemQuestion(
-                    question: context.read<QuestionBloc>().questions[index]);
+                    question: context.watch<QuestionBloc>().questions[index],
+                    index: index,
+                  );
           },
           itemCount: context.watch<QuestionBloc>().model.isLoading
               ? 7
               : context.watch<QuestionBloc>().questions.length,
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
+            return Container(
               height: SizeConfig.paddingSizeVertical16,
+              width: SizeConfig.screenWidth,
               color: Theme.of(context).cardColor,
             );
           },

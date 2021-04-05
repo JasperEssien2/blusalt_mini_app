@@ -9,7 +9,7 @@ part 'user_bloc_state.dart';
 
 class UserBlocCubit extends Cubit<UserBlocState> {
   late UserResponse response = UserResponse(
-      id: '',
+      id: 'anonymous',
       email: '',
       firstname: '',
       lastname: '',
@@ -29,9 +29,10 @@ class UserBlocCubit extends Cubit<UserBlocState> {
         response = requestState.value;
         emit(UserGotten(user: requestState.value));
       } else {
-        emit(UserGotten(
-            user: getDummyUser().copyWith(
-                firstname: 'Anonymous', lastname: '', id: 'anonymous_poster')));
+        var user = getDummyUser().copyWith(
+            firstname: 'Anonymous', lastname: '', id: 'anonymous_poster');
+        response = user;
+        emit(UserGotten(user: user));
       }
       emit(UserBlocInitial());
     }

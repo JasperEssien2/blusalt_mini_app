@@ -36,9 +36,10 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
     model.setLoadingStatus(true);
     RequestState requestState = await _makeQuestionListRequest(event);
     if (requestState is SuccessState) {
-      questions.addAll(requestState.value);
+      questions.addAll(List<Question>.from(requestState.value));
       yield QuestionsListLoadedState(
-          questions: requestState.value, isSearch: event.searchQuery != null);
+          questions: List<Question>.from(requestState.value),
+          isSearch: event.searchQuery != null);
     } else if (requestState is ErrorState)
       yield QuestionListErrorState(errorModel: requestState.value);
     model.setLoadingStatus(false);
@@ -60,6 +61,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
 
     if (requestState is SuccessState) {
       _updateQuestionBaseOnVote(event);
+      questions[event.questionIndex] = event.question;
       yield VoteUpdated(index: event.questionIndex, question: event.question);
     } else if (requestState is ErrorState) {
       yield QuestionListErrorState(errorModel: requestState.value);

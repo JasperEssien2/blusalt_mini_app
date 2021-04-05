@@ -45,17 +45,13 @@ class IntlUtil {
     return DateFormat('y/M/d H:mm:s').format(datetime);
   }
 
-  static String formatDateMedium(String date, {bool displayTime = true}) {
+  static String formatDateMedium(DateTime date, {bool displayTime = true}) {
     String timeFormat = displayTime ? 'H:mm:s' : '';
 
-    if (date == null || date.isEmpty) {
+    if (date == null) {
       return DateFormat('d MMMM, y. $timeFormat').format(DateTime.now());
     }
-    final datetime = DateTime.tryParse(date);
-    if (datetime == null) {
-      return DateFormat('d MMMM, y. $timeFormat').format(DateTime.now());
-    }
-    return DateFormat('d MMMM, y. $timeFormat').format(datetime);
+    return DateFormat('d MMMM, y. $timeFormat').format(date);
   }
 
   static String formatTimeMedium(

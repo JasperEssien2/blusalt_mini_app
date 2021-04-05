@@ -19,6 +19,7 @@ class CreateCubit extends Cubit<CreateState> {
 
   void updateText(String text) {
     createUIModel.setText(text);
+    UpdateUIState();
   }
 
   void create(String questionId, bool isAnswer) async {
@@ -51,5 +52,6 @@ class CreateCubit extends Cubit<CreateState> {
   void _updateUIOnRequestSuccess() {
     createUIModel.setLoadingStatus(false);
     createUIModel.setText('');
+    UpdateUIState();
   }
 }
