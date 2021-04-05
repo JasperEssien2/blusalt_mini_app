@@ -6,8 +6,13 @@ class GradientAppBar extends StatelessWidget {
   final Widget child;
   final double? height;
   final List<Color>? gradientColors;
+  final Alignment alignment;
   const GradientAppBar(
-      {Key? key, required this.child, this.height, this.gradientColors})
+      {Key? key,
+      required this.child,
+      this.height,
+      this.gradientColors,
+      this.alignment = Alignment.center})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,10 @@ class GradientAppBar extends StatelessWidget {
           //     fit: BoxFit.fitWidth,
           //   ),
           // ),
-          Center(child: child),
+          Align(
+            child: child,
+            alignment: alignment,
+          ),
           SizedBox(
             height: SizeConfig.paddingSizeVertical16,
           ),

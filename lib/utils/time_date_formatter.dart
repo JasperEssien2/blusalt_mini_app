@@ -18,6 +18,14 @@ class TimeDateFormatter {
     return parsedDate.parse(stringDate);
   }
 
+  static DateTime parseStringDateOnly(
+    String stringDate,
+  ) {
+    var parsedDate = DateFormat("yyyy-MM-dd");
+
+    return parsedDate.parse(stringDate);
+  }
+
   ///This method compares [dateToCompare] with a [startDate] and a [endDate]
   ///Returns [DateComparison.IN_BETWEEN] if [dateToCompare] is inbetween the other 2 dates
   ///[DateComparison.EQUALS_START] or [DateComparison.EQUALS_END] if equals to [startDate] or [endDate] respectively

@@ -7,12 +7,10 @@ import 'package:blusalt_mini_app/utils/time_date_formatter.dart';
 import 'package:blusalt_mini_app/views/components/dialog_create.dart';
 import 'package:blusalt_mini_app/views/components/item_appbar.dart';
 import 'package:blusalt_mini_app/views/routes/routes.dart';
-import 'package:blusalt_mini_app/views/screens/question/widgets/item_question.dart';
+import 'package:blusalt_mini_app/views/screens/question/widgets/question_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -101,55 +99,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class QuestionListView extends StatelessWidget {
-  const QuestionListView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: injector.get<QuestionBloc>(),
-      child: BlocConsumer<QuestionBloc, QuestionState>(
-        listener: (context, state) {
-          _handleStateListenerChange(state);
-        },
-        builder: (context, state) => ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return context.watch<QuestionBloc>().model.isLoading
-                ? Shimmer.fromColors(
-                    child: ItemQuestionShimmer(),
-                    baseColor: Colors.grey,
-                    highlightColor: Colors.grey[100]!,
-                    enabled: true,
-                  )
-                : ItemQuestion(
-                    question: context.watch<QuestionBloc>().questions[index],
-                    index: index,
-                  );
-          },
-          itemCount: context.watch<QuestionBloc>().model.isLoading
-              ? 7
-              : context.watch<QuestionBloc>().questions.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              height: SizeConfig.paddingSizeVertical16,
-              width: SizeConfig.screenWidth,
-              color: Theme.of(context).cardColor,
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  void _handleStateListenerChange(QuestionState state) {
-    if (state is QuestionListErrorState)
-      Fluttertoast.showToast(msg: state.errorModel.errorMessage);
-  }
-}
-
 class AppbarContent extends StatelessWidget {
   const AppbarContent({
     Key? key,
@@ -175,11 +124,17 @@ class AppbarContent extends StatelessWidget {
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          radius: 16.0,
-                          backgroundImage: NetworkImage(
-                              'https://library.kissclipart.com/20190326/ae/kissclipart-smile-emoji-image-happiness-emoticon-a4836419f4ca03ae.png'),
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(
+                              context, Routes.profilePage,
+                              arguments:
+                                  context.read<UserBlocCubit>().response),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 16.0,
+                            backgroundImage: NetworkImage(
+                                'https://library.kissclipart.com/20190326/ae/kissclipart-smile-emoji-image-happiness-emoticon-a4836419f4ca03ae.png'),
+                          ),
                         ),
                         SizedBox(
                           width: 16.0,
