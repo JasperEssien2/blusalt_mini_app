@@ -148,7 +148,7 @@ class DialogCreate extends StatelessWidget {
                     isEnabled: context
                         .watch<CreateCubit>()
                         .createUIModel
-                        .getText
+                        .text
                         .trim()
                         .isNotEmpty,
                     isLoading:

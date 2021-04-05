@@ -18,8 +18,8 @@ class CreateCubit extends Cubit<CreateState> {
       : super(CreateInitial());
 
   void updateText(String text) {
-    createUIModel.setText(text);
-    UpdateUIState();
+    createUIModel.text = text;
+    emit(UpdateUIState());
   }
 
   void create(String questionId, bool isAnswer) async {
@@ -42,16 +42,15 @@ class CreateCubit extends Cubit<CreateState> {
     RequestState requestState;
     if (isAnswer)
       requestState =
-          await answerRepository.postAnswer(questionId, createUIModel.getText);
+          await answerRepository.postAnswer(questionId, createUIModel.text);
     else
-      requestState =
-          await questionRepository.postQuestion(createUIModel.getText);
+      requestState = await questionRepository.postQuestion(createUIModel.text);
     return requestState;
   }
 
   void _updateUIOnRequestSuccess() {
     createUIModel.setLoadingStatus(false);
-    createUIModel.setText('');
-    UpdateUIState();
+    createUIModel.text = '';
+    emit(UpdateUIState());
   }
 }

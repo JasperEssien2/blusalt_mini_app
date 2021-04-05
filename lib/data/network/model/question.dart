@@ -2,7 +2,7 @@ import 'package:blusalt_mini_app/data/network/model/user_response.dart';
 import 'package:equatable/equatable.dart';
 
 class Question extends Equatable {
-  late final int votes;
+  late int votes;
   late final String id;
   late final String question;
   late final String user;

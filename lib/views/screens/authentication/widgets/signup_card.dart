@@ -65,8 +65,8 @@ class _SignUpCardState extends State<SignUpCard> {
         BlocProvider<SignUpCubit>(
           create: (context) => injector.get<SignUpCubit>(),
         ),
-        BlocProvider<LoginCubit>(
-          create: (context) => injector.get<LoginCubit>(),
+        BlocProvider<LoginCubit>.value(
+          value: injector.get<LoginCubit>(),
           child: BlocListener<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessfulState)
