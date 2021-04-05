@@ -16,9 +16,9 @@ class HttpHelper {
 
     Map<String, dynamic> headers = {};
     headers['Content-Type'] = 'application/json';
-    headers['Authorization'] = 'Token $storageToken';
+    // headers['Authorization'] = '$storageToken';
 
-    _client!.options.headers = headers;
+    // _client!.options.headers = headers;
 
     return _client!;
   }

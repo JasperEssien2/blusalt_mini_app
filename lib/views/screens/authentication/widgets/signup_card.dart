@@ -1,3 +1,4 @@
+import 'package:blusalt_mini_app/blocs/authentication/login_cubit.dart';
 import 'package:blusalt_mini_app/blocs/authentication/sign_up_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/request_models/signup_body.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
@@ -59,8 +60,27 @@ class _SignUpCardState extends State<SignUpCard> {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return BlocProvider(
-      create: (_) => injector.get<SignUpCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SignUpCubit>(
+          create: (context) => injector.get<SignUpCubit>(),
+        ),
+        BlocProvider<LoginCubit>(
+          create: (context) => injector.get<LoginCubit>(),
+          child: BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state is LoginSuccessfulState)
+                Navigator.popAndPushNamed(context, Routes.homePage);
+              else if (state is LoginErrorState) {
+                Fluttertoast.showToast(
+                    msg: 'An error occurred while login in, please try again!');
+                Navigator.popAndPushNamed(
+                    context, Routes.authenticationPageLogin);
+              }
+            },
+          ),
+        )
+      ],
       child: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
           _handleStateChange(state, context);
@@ -186,7 +206,8 @@ class _SignUpCardState extends State<SignUpCard> {
 
   void _handleStateChange(SignUpState state, BuildContext context) {
     if (state is SignUpSuccessfulState) {
-      Navigator.popAndPushNamed(context, Routes.homePage);
+      Fluttertoast.showToast(msg: 'Sign up successful, Login you in...');
+      // Navigator.popAndPushNamed(context, Routes.homePage);
     } else if (state is SignUpErrorState) {
       Fluttertoast.showToast(msg: '${state.errorModel.errorMessage}');
     }

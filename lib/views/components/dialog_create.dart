@@ -19,9 +19,11 @@ class DialogCreate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CreateCubit>(
-      lazy: false,
-      create: (context) => injector.get<CreateCubit>(),
+    textEditingController.addListener(() {
+      injector.get<CreateCubit>().updateText(textEditingController.text);
+    });
+    return BlocProvider<CreateCubit>.value(
+      value: injector.get<CreateCubit>(),
       child: BlocConsumer<CreateCubit, CreateState>(
         listener: (context, state) {
           _handleListenerStateChanges(state);

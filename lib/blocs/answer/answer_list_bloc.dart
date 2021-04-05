@@ -15,6 +15,8 @@ part 'answer_list_state.dart';
 class AnswerListBloc extends Bloc<AnswerListEvent, AnswerListState> {
   final AnswerRepository answerRepository;
   final LoadingUIModel model = LoadingUIModel();
+
+  final List<AnswerResponse> answers = [];
   AnswerListBloc({required this.answerRepository}) : super(AnswerListInitial());
 
   @override
@@ -35,7 +37,8 @@ class AnswerListBloc extends Bloc<AnswerListEvent, AnswerListState> {
     model.setLoadingStatus(true);
     RequestState requestState = await _makeLoadAnswersRequest(event);
     if (requestState is SuccessState)
-      yield AnswerListLoadedState(answers: requestState.value);
+      yield AnswerListLoadedState(
+          answers: List<AnswerResponse>.from(requestState.value));
     else if (requestState is ErrorState)
       yield AnswerListErrorState(errorModel: requestState.value);
     model.setLoadingStatus(false);

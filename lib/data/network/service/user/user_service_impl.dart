@@ -11,9 +11,9 @@ class UserServiceImpl extends AbstractUserService {
   UserServiceImpl({required this.helper});
 
   @override
-  Future<RequestState> getUser(String token) async {
+  Future<RequestState> getUser(String id) async {
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
-      () => helper.get(authenticationEndpoint.getUser + '$token'),
+      () => helper.get(authenticationEndpoint.getUser + '$id'),
       successResponse: (data) {
         if (data != null)
           return RequestState.success(UserResponse.fromJson(data));

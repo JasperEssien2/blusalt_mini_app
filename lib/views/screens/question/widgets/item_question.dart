@@ -27,169 +27,174 @@ class ItemQuestion extends StatelessWidget {
       color: Colors.transparent,
       margin:
           EdgeInsets.symmetric(horizontal: SizeConfig.paddingSizeVertical20),
-      child: Container(
-        width: size.width,
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.paddingSizeHorizontal20,
-          vertical: SizeConfig.paddingSizeVertical16,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            BlocProvider<UserBlocCubit>(
-              lazy: false,
-              create: (context) {
-                var userBlocCubit = UserBlocCubit(repository: injector.get());
-                userBlocCubit.getUser(id: question.user);
-                return userBlocCubit;
-              },
-              child: BlocConsumer<UserBlocCubit, UserBlocState>(
-                listener: (context, state) {
-                  if (state is UserGotten) {
-                    question.userModel = state.user;
-                    print(
-                        'ITEM QUESTION: USER GOTTEN ---------- ${state.user.firstname}');
-                  }
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, Routes.questionDetailPage,
+            arguments: question),
+        child: Container(
+          width: size.width,
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.paddingSizeHorizontal20,
+            vertical: SizeConfig.paddingSizeVertical16,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              BlocProvider<UserBlocCubit>(
+                lazy: false,
+                create: (context) {
+                  var userBlocCubit = UserBlocCubit(repository: injector.get());
+                  userBlocCubit.getUser(id: question.user);
+                  return userBlocCubit;
                 },
-                builder: (context, state) => Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, Routes.profilePage,
-                          arguments: context.read<UserBlocCubit>().response),
-                      child: Container(
-                        width: SizeConfig.heightSize30,
-                        height: SizeConfig.heightSize30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                'https://cdn4.vectorstock.com/i/1000x1000/52/48/man-cartoon-face-male-facial-expression-vector-15325248.jpg'),
+                child: BlocConsumer<UserBlocCubit, UserBlocState>(
+                  listener: (context, state) {
+                    if (state is UserGotten) {
+                      question.userModel = state.user;
+                      print(
+                          'ITEM QUESTION: USER GOTTEN ---------- ${state.user.firstname}');
+                    }
+                  },
+                  builder: (context, state) => Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, Routes.profilePage,
+                            arguments: context.read<UserBlocCubit>().response),
+                        child: Container(
+                          width: SizeConfig.heightSize30,
+                          height: SizeConfig.heightSize30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  'https://cdn4.vectorstock.com/i/1000x1000/52/48/man-cartoon-face-male-facial-expression-vector-15325248.jpg'),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: SizeConfig.paddingSizeHorizontal12,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${context.watch<UserBlocCubit>().response.firstname} '
-                            '${context.watch<UserBlocCubit>().response.lastname}',
-                            style: themeData.textTheme.bodyText2!.copyWith(
-                              color: themeData
-                                  .colorScheme.secondaryTextColorScheme,
-                              fontSize: SizeConfig.textSize16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.paddingSizeVertical5,
-                          ),
-                          Text(
-                            '${TimeDateFormatter.getDateAgo(question.createdAt)}',
-                            style: themeData.textTheme.bodyText1!.copyWith(
-                              color: themeData
-                                  .colorScheme.secondaryTextColorScheme,
-                              fontSize: SizeConfig.textSize13,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.paddingSizeVertical16,
-                          ),
-                          Text(
-                            '${question.question}',
-                            style: themeData.textTheme.bodyText1!.copyWith(
-                              color:
-                                  themeData.colorScheme.primaryTextColorScheme,
-                              fontSize: SizeConfig.textSize14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.paddingSizeVertical16,
-                          ),
-                          Container(
-                            height: SizeConfig.heightSize30,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  customBorder: CircleBorder(),
-                                  onTap: () => _voteQuestion(
-                                      context: context, voteAction: 'up'),
-                                  child: Container(
-                                    height: 20.0,
-                                    width: 20.0,
-                                    margin: EdgeInsets.only(
-                                        right:
-                                            SizeConfig.paddingSizeHorizontal12),
-                                    child: SvgPicture.asset(
-                                      ImageUtil.upvote,
-                                      height: 18.0,
-                                      width: 18.0,
-                                      color: Colors.green,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${question.votes}',
-                                  style:
-                                      themeData.textTheme.bodyText1!.copyWith(
-                                    color: themeData
-                                        .colorScheme.secondaryTextColorScheme,
-                                    fontSize: SizeConfig.textSize18,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                InkWell(
-                                  customBorder: CircleBorder(),
-                                  onTap: () => _voteQuestion(
-                                      context: context, voteAction: 'down'),
-                                  child: Container(
-                                    height: 20.0,
-                                    width: 20.0,
-                                    margin: EdgeInsets.only(
-                                        left:
-                                            SizeConfig.paddingSizeHorizontal12),
-                                    child: SvgPicture.asset(
-                                      ImageUtil.downvote,
-                                      height: 24.0,
-                                      width: 24.0,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.paddingSizeVertical16,
-                          ),
-                        ],
+                      SizedBox(
+                        width: SizeConfig.paddingSizeHorizontal12,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '${context.watch<UserBlocCubit>().response.firstname} '
+                              '${context.watch<UserBlocCubit>().response.lastname}',
+                              style: themeData.textTheme.bodyText2!.copyWith(
+                                color: themeData
+                                    .colorScheme.secondaryTextColorScheme,
+                                fontSize: SizeConfig.textSize16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.paddingSizeVertical5,
+                            ),
+                            Text(
+                              '${TimeDateFormatter.getDateAgo(question.createdAt)}',
+                              style: themeData.textTheme.bodyText1!.copyWith(
+                                color: themeData
+                                    .colorScheme.secondaryTextColorScheme,
+                                fontSize: SizeConfig.textSize13,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.paddingSizeVertical16,
+                            ),
+                            Text(
+                              '${question.question}',
+                              style: themeData.textTheme.bodyText1!.copyWith(
+                                color: themeData
+                                    .colorScheme.primaryTextColorScheme,
+                                fontSize: SizeConfig.textSize14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.paddingSizeVertical16,
+                            ),
+                            Container(
+                              height: SizeConfig.heightSize30,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    customBorder: CircleBorder(),
+                                    onTap: () => _voteQuestion(
+                                        context: context, voteAction: 'up'),
+                                    child: Container(
+                                      height: 20.0,
+                                      width: 20.0,
+                                      margin: EdgeInsets.only(
+                                          right: SizeConfig
+                                              .paddingSizeHorizontal12),
+                                      child: SvgPicture.asset(
+                                        ImageUtil.upvote,
+                                        height: 18.0,
+                                        width: 18.0,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${question.votes}',
+                                    style:
+                                        themeData.textTheme.bodyText1!.copyWith(
+                                      color: themeData
+                                          .colorScheme.secondaryTextColorScheme,
+                                      fontSize: SizeConfig.textSize18,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    customBorder: CircleBorder(),
+                                    onTap: () => _voteQuestion(
+                                        context: context, voteAction: 'down'),
+                                    child: Container(
+                                      height: 20.0,
+                                      width: 20.0,
+                                      margin: EdgeInsets.only(
+                                          left: SizeConfig
+                                              .paddingSizeHorizontal12),
+                                      child: SvgPicture.asset(
+                                        ImageUtil.downvote,
+                                        height: 24.0,
+                                        width: 24.0,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.paddingSizeVertical16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

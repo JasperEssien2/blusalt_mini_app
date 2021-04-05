@@ -7,7 +7,7 @@ class UserRepositoryImpl extends AbstractUserService {
   UserRepositoryImpl({required this.userService});
 
   @override
-  Future<RequestState> getUser(String email) {
-    return userService.getUser(email);
+  Future<RequestState> getUser(String id) {
+    return userService.getUser(id);
   }
 }

@@ -15,9 +15,9 @@ Future<void> init(GetIt injector) async {
 
       Map<String, dynamic> headers = {};
       headers['Content-Type'] = 'application/json';
-      if (storageToken != null) headers['Authorization'] = '$storageToken';
+      // if (storageToken != null) headers['Authorization'] = '$storageToken';
 
-      dioClient.options.headers = headers;
+      // dioClient.options.headers = headers;
 
       return dioClient;
     },
@@ -27,7 +27,7 @@ Future<void> init(GetIt injector) async {
 
   injector.registerFactoryAsync<UserResponse>(
     () async {
-      String? id = await StorageHelper.getString(StorageKeys.token);
+      String? id = await StorageHelper.getString(StorageKeys.ID);
       var dummyUser = getDummyUser()
           .copyWith(id: 'anonymous', firstname: 'Anonymous', lastname: '');
       if (id == null) {
