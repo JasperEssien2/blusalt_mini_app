@@ -20,6 +20,7 @@ class CreateCubit extends Cubit<CreateState> {
   void updateText(String text) {
     createUIModel.text = text;
     emit(UpdateUIState());
+    emit(CreateInitial());
   }
 
   void create(String questionId, bool isAnswer) async {
@@ -52,5 +53,6 @@ class CreateCubit extends Cubit<CreateState> {
     createUIModel.setLoadingStatus(false);
     createUIModel.text = '';
     emit(UpdateUIState());
+    emit(CreateInitial());
   }
 }

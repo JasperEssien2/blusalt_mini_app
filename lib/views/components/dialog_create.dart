@@ -1,4 +1,5 @@
 import 'package:blusalt_mini_app/blocs/create/create_cubit.dart';
+import 'package:blusalt_mini_app/blocs/question/question_bloc.dart';
 import 'package:blusalt_mini_app/data/network/model/question.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
 import 'package:blusalt_mini_app/styles/colors.dart';
@@ -20,13 +21,13 @@ class DialogCreate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     textEditingController.addListener(() {
-      injector.get<CreateCubit>().updateText(textEditingController.text);
+      injector.get<CreateCubit>().updateText(textEditingController.text.trim());
     });
     return BlocProvider<CreateCubit>.value(
       value: injector.get<CreateCubit>(),
       child: BlocConsumer<CreateCubit, CreateState>(
         listener: (context, state) {
-          _handleListenerStateChanges(state);
+          _handleListenerStateChanges(context, state);
         },
         builder: (context, state) => Dialog(
           backgroundColor: Theme.of(context).cardColor,
@@ -168,7 +169,11 @@ class DialogCreate extends StatelessWidget {
     );
   }
 
-  void _handleListenerStateChanges(CreateState state) {
+  void _handleListenerStateChanges(BuildContext context, CreateState state) {
+    if (state is UploadedSuccessfully) {
+      injector.get<QuestionBloc>().add(LoadQuestionList());
+      Navigator.pop(context);
+    }
     if (state is CreateErrorState) {
       Fluttertoast.showToast(
           msg: 'Error posting ${isAnswer ? 'answer' : 'question'}');

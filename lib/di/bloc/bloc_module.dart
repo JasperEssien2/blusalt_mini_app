@@ -28,7 +28,8 @@ void _injectDependenciesRelatedToQuestion(GetIt injector) {
 
   injector.registerLazySingleton(() => QuestionBloc(repository: injector.get()),
       instanceName: 'profile');
-  injector.registerFactory(() => CreateCubit(
+
+  injector.registerLazySingleton(() => CreateCubit(
       answerRepository: injector.get(), questionRepository: injector.get()));
 }
 
