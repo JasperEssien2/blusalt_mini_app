@@ -84,10 +84,6 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
   }
 
   void _insertDataPoint() {
-    print("INSERT DATA POINT ----------------- ${questions}");
-    print(
-        "INSERT DATA POINT DAtA POINT ----------------- ${_getAxisPoint(questions)}");
-
     dataPoint.clear();
     dataPoint.addAll(_getAxisPoint(questions));
   }

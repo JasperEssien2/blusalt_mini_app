@@ -67,134 +67,130 @@ class _SignUpCardState extends State<SignUpCard> {
         ),
         BlocProvider<LoginCubit>.value(
           value: injector.get<LoginCubit>(),
-          child: BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state is LoginSuccessfulState)
-                Navigator.popAndPushNamed(context, Routes.homePage);
-              else if (state is LoginErrorState) {
-                Fluttertoast.showToast(
-                    msg: 'An error occurred while login in, please try again!');
-                Navigator.popAndPushNamed(
-                    context, Routes.authenticationPageLogin);
-              }
-            },
-          ),
         )
       ],
-      child: BlocConsumer<SignUpCubit, SignUpState>(
+      child: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
-          _handleStateChange(state, context);
+          _handleLoginBlocStateChange(state, context);
         },
-        builder: (context, state) => Card(
-          color: themeData.cardColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
+        child: BlocConsumer<SignUpCubit, SignUpState>(
+          listener: (context, state) {
+            _handleStateChange(state, context);
+          },
+          builder: (context, state) => Card(
+            color: themeData.cardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
             ),
-          ),
-          elevation: 4.0,
-          margin: EdgeInsets.symmetric(
-            vertical: 16.0,
-            horizontal: 30.0,
-          ),
-          child: Container(
-            width: SizeConfig.screenWidth,
-            height: SizeConfig.screenHeight / 1.5,
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        'Sign Up',
-                        style: themeData.accentTextTheme.bodyText2!.copyWith(
-                          color: appbarEndGradient,
-                          fontWeight: FontWeight.w700,
-                          fontSize: SizeConfig.textSize30,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.paddingSizeVertical20,
-                    ),
-                    CustomEditText(
-                      textEditingController: firstname,
-                      hintText: 'First Name',
-                      type: TextInputType.name,
-                    ),
-                    CustomEditText(
-                      textEditingController: lastName,
-                      hintText: 'Last Name',
-                      type: TextInputType.name,
-                    ),
-                    CustomEditText(
-                      textEditingController: email,
-                      hintText: 'Email',
-                      type: TextInputType.emailAddress,
-                    ),
-                    CustomEditText(
-                      textEditingController: password,
-                      hintText: 'Password',
-                      type: TextInputType.text,
-                      obscureText: true,
-                    ),
-                    CustomEditText(
-                      textEditingController: cPassword,
-                      hintText: 'Confirm Password',
-                      type: TextInputType.text,
-                      obscureText: true,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          _openLoginPage();
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Have an account?',
-                            style: themeData.textTheme.bodyText2!.copyWith(
-                              fontSize: SizeConfig.textSize14,
-                              fontWeight: FontWeight.w400,
-                              color: themeData
-                                  .colorScheme.secondaryTextColorScheme,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: ' Log In!',
-                                style: themeData.accentTextTheme.bodyText2!
-                                    .copyWith(
-                                  fontSize: SizeConfig.textSize14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
+            elevation: 4.0,
+            margin: EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 30.0,
+            ),
+            child: Container(
+              width: SizeConfig.screenWidth,
+              height: SizeConfig.screenHeight / 1.5,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          'Sign Up',
+                          style: themeData.accentTextTheme.bodyText2!.copyWith(
+                            color: appbarEndGradient,
+                            fontWeight: FontWeight.w700,
+                            fontSize: SizeConfig.textSize30,
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: _getPaddingBetweenButtonAndLastEditText(),
-                        left: SizeConfig.paddingSizeHorizontal16,
-                        right: SizeConfig.paddingSizeHorizontal16,
-                        bottom: SizeConfig.paddingSizeVertical16,
+                      SizedBox(
+                        height: SizeConfig.paddingSizeVertical20,
                       ),
-                      child: CustomButton(
-                        buttonText: 'Sign Up',
-                        isLoading: context.watch<SignUpCubit>().model.isLoading,
-                        isEnabled:
-                            context.watch<SignUpCubit>().model.isButtonEnabled,
-                        onPressed: () {
-                          context.read<SignUpCubit>().signUp();
-                        },
+                      CustomEditText(
+                        textEditingController: firstname,
+                        hintText: 'First Name',
+                        type: TextInputType.name,
                       ),
-                    ),
-                  ],
+                      CustomEditText(
+                        textEditingController: lastName,
+                        hintText: 'Last Name',
+                        type: TextInputType.name,
+                      ),
+                      CustomEditText(
+                        textEditingController: email,
+                        hintText: 'Email',
+                        type: TextInputType.emailAddress,
+                      ),
+                      CustomEditText(
+                        textEditingController: password,
+                        hintText: 'Password',
+                        type: TextInputType.text,
+                        obscureText: true,
+                      ),
+                      CustomEditText(
+                        textEditingController: cPassword,
+                        hintText: 'Confirm Password',
+                        type: TextInputType.text,
+                        obscureText: true,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            _openLoginPage();
+                          },
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Have an account?',
+                              style: themeData.textTheme.bodyText2!.copyWith(
+                                fontSize: SizeConfig.textSize14,
+                                fontWeight: FontWeight.w400,
+                                color: themeData
+                                    .colorScheme.secondaryTextColorScheme,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: ' Log In!',
+                                  style: themeData.accentTextTheme.bodyText2!
+                                      .copyWith(
+                                    fontSize: SizeConfig.textSize14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: _getPaddingBetweenButtonAndLastEditText(),
+                          left: SizeConfig.paddingSizeHorizontal16,
+                          right: SizeConfig.paddingSizeHorizontal16,
+                          bottom: SizeConfig.paddingSizeVertical16,
+                        ),
+                        child: CustomButton(
+                          buttonText: 'Sign Up',
+                          isLoading:
+                              context.watch<SignUpCubit>().model.isLoading,
+                          isEnabled: context
+                              .watch<SignUpCubit>()
+                              .model
+                              .isButtonEnabled,
+                          onPressed: () {
+                            context.read<SignUpCubit>().signUp();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -202,6 +198,17 @@ class _SignUpCardState extends State<SignUpCard> {
         ),
       ),
     );
+  }
+
+  void _handleLoginBlocStateChange(LoginState state, BuildContext context) {
+    print('SIGN UP BLOC STATE: $state --------------------- ');
+    if (state is LoginSuccessfulState)
+      Navigator.popAndPushNamed(context, Routes.homePage);
+    else if (state is LoginErrorState) {
+      Fluttertoast.showToast(
+          msg: 'An error occurred while login in, please try again!');
+      Navigator.popAndPushNamed(context, Routes.authenticationPageLogin);
+    }
   }
 
   void _handleStateChange(SignUpState state, BuildContext context) {
