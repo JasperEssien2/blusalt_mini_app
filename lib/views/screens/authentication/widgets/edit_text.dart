@@ -17,8 +17,8 @@ class CustomEditText extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var primaryTextColorScheme2 =
-        Theme.of(context).colorScheme.primaryTextColorScheme;
+    var themeData = Theme.of(context);
+    var primaryTextColorScheme2 = themeData.colorScheme.primaryTextColorScheme;
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -33,16 +33,14 @@ class CustomEditText extends StatelessWidget {
         textAlign: TextAlign.start,
         minLines: 1,
         maxLines: 1,
+        // style: _labelTextFormTextStyle(themeData),
         decoration: InputDecoration(
           hintText: hintText,
-          labelStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-          helperStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-                color: primaryTextColorScheme2,
-                fontWeight: FontWeight.w700,
-              ),
+          labelStyle: _labelTextFormTextStyle(themeData),
+          helperStyle: themeData.textTheme.bodyText2!.copyWith(
+            color: primaryTextColorScheme2,
+            fontWeight: FontWeight.w700,
+          ),
           focusColor: accentColor,
           hoverColor: accentColor,
           enabledBorder: UnderlineInputBorder(
@@ -51,7 +49,7 @@ class CustomEditText extends StatelessWidget {
             ),
             borderSide: BorderSide(
               width: 0.5,
-              color: Theme.of(context).colorScheme.dividerColorScheme,
+              color: themeData.colorScheme.dividerColorScheme,
             ),
           ),
           disabledBorder: UnderlineInputBorder(
@@ -60,7 +58,7 @@ class CustomEditText extends StatelessWidget {
             ),
             borderSide: BorderSide(
               width: 0.5,
-              color: Theme.of(context).colorScheme.dividerColorScheme,
+              color: themeData.colorScheme.dividerColorScheme,
             ),
           ),
           focusedBorder: UnderlineInputBorder(
@@ -74,6 +72,13 @@ class CustomEditText extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  TextStyle _labelTextFormTextStyle(ThemeData themeData) {
+    return themeData.textTheme.bodyText2!.copyWith(
+      color: themeData.colorScheme.primaryTextColorScheme,
+      fontWeight: FontWeight.w700,
     );
   }
 }

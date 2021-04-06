@@ -52,8 +52,6 @@ class ItemQuestion extends StatelessWidget {
                   listener: (context, state) {
                     if (state is UserGotten) {
                       question.userModel = state.user;
-                      print(
-                          'ITEM QUESTION: USER GOTTEN ---------- ${state.user.firstname}');
                     }
                   },
                   builder: (context, state) => Row(

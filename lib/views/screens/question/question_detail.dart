@@ -76,7 +76,7 @@ class _QuestionDetailPageState extends State<QuestionDetailPage> {
     );
   }
 
-  double _appbarHeight(Size size) => size.height * 0.15;
+  double _appbarHeight(Size size) => size.height * 0.18;
 
   void _showAddAnswerDialog() {
     showDialog(
@@ -144,12 +144,15 @@ class AppbarContent extends StatelessWidget {
               SizedBox(
                 width: 16.0,
               ),
-              Text(
-                ' ${question.question}',
-                style: themeData.textTheme.headline6!.copyWith(
-                  color: Colors.white,
-                  fontSize: SizeConfig.textSize18,
-                  fontWeight: FontWeight.w700,
+              Flexible(
+                child: Text(
+                  ' ${question.question}',
+                  maxLines: 3,
+                  style: themeData.textTheme.headline6!.copyWith(
+                    color: Colors.white,
+                    fontSize: SizeConfig.textSize16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],
@@ -158,45 +161,48 @@ class AppbarContent extends StatelessWidget {
         SizedBox(
           height: SizeConfig.paddingSizeVertical20,
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Tooltip(
-              message: 'Write Answer',
-              child: Icon(
-                Icons.edit,
-                size: 24.0,
-                color: Colors.white,
-                semanticLabel: 'Write Answer',
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Tooltip(
+                message: 'Write Answer',
+                child: Icon(
+                  Icons.edit,
+                  size: 24.0,
+                  color: Colors.white,
+                  semanticLabel: 'Write Answer',
+                ),
               ),
-            ),
-            Tooltip(
-                message: 'Share Question',
-                child: Icon(
-                  Icons.share,
-                  size: 24.0,
-                  color: Colors.white,
-                  semanticLabel: 'Share Question',
-                )),
-            Tooltip(
-                message: 'Follow user',
-                child: Icon(
-                  Icons.person_add_alt_1,
-                  size: 24.0,
-                  color: Colors.white,
-                  semanticLabel: 'Follow user',
-                )),
-            Tooltip(
-                message: 'Search Answers',
-                child: Icon(
-                  Icons.search,
-                  size: 24.0,
-                  color: Colors.white,
-                  semanticLabel: 'Search Answer',
-                )),
-          ],
+              Tooltip(
+                  message: 'Share Question',
+                  child: Icon(
+                    Icons.share,
+                    size: 24.0,
+                    color: Colors.white,
+                    semanticLabel: 'Share Question',
+                  )),
+              Tooltip(
+                  message: 'Follow user',
+                  child: Icon(
+                    Icons.person_add_alt_1,
+                    size: 24.0,
+                    color: Colors.white,
+                    semanticLabel: 'Follow user',
+                  )),
+              Tooltip(
+                  message: 'Search Answers',
+                  child: Icon(
+                    Icons.search,
+                    size: 24.0,
+                    color: Colors.white,
+                    semanticLabel: 'Search Answer',
+                  )),
+            ],
+          ),
         ),
       ],
     );

@@ -62,8 +62,8 @@ class _SignUpCardState extends State<SignUpCard> {
     var themeData = Theme.of(context);
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SignUpCubit>(
-          create: (context) => injector.get<SignUpCubit>(),
+        BlocProvider<SignUpCubit>.value(
+          value: injector.get<SignUpCubit>(),
         ),
         BlocProvider<LoginCubit>.value(
           value: injector.get<LoginCubit>(),
@@ -214,7 +214,7 @@ class _SignUpCardState extends State<SignUpCard> {
   }
 
   void _openLoginPage() {
-    Navigator.popAndPushNamed(context, Routes.authenticationPageSignUp);
+    Navigator.popAndPushNamed(context, Routes.authenticationPageLogin);
   }
 
   double _getPaddingBetweenButtonAndLastEditText() =>

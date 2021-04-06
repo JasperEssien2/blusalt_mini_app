@@ -36,10 +36,13 @@ class AnswerListBloc extends Bloc<AnswerListEvent, AnswerListState> {
     yield AnswerListLoadingState();
     model.setLoadingStatus(true);
     RequestState requestState = await _makeLoadAnswersRequest(event);
-    if (requestState is SuccessState)
-      yield AnswerListLoadedState(
-          answers: List<AnswerResponse>.from(requestState.value));
-    else if (requestState is ErrorState)
+    print('ANSWER LIST BLOC RESPONSE ------------- ${requestState.toString()}');
+    if (requestState is SuccessState) {
+      var filteredList = filterAnswerList(
+          List<AnswerResponse>.from(requestState.value), event.questionId);
+      _addAnswersToList(filteredList);
+      yield AnswerListLoadedState(answers: filteredList);
+    } else if (requestState is ErrorState)
       yield AnswerListErrorState(errorModel: requestState.value);
     model.setLoadingStatus(false);
     yield AnswerListInitial();
@@ -53,5 +56,20 @@ class AnswerListBloc extends Bloc<AnswerListEvent, AnswerListState> {
       requestState = await answerRepository.getAnswers();
 
     return requestState;
+  }
+
+  List<AnswerResponse> filterAnswerList(
+      List<AnswerResponse> list, String questId) {
+    List<AnswerResponse> filteredList = [];
+    list.forEach((element) {
+      if (element.question.id == questId) filteredList.add(element);
+    });
+
+    return filteredList;
+  }
+
+  void _addAnswersToList(List<AnswerResponse> filteredList) {
+    answers.clear();
+    answers.addAll(filteredList);
   }
 }

@@ -1,7 +1,5 @@
 import 'package:blusalt_mini_app/blocs/authentication/login_cubit.dart';
 import 'package:blusalt_mini_app/di/injector_container.dart';
-import 'package:blusalt_mini_app/helpers/storage/storage.helper.dart';
-import 'package:blusalt_mini_app/helpers/storage/storage.keys.dart';
 import 'package:blusalt_mini_app/styles/colors.dart';
 import 'package:blusalt_mini_app/utils/size_config_util.dart';
 import 'package:blusalt_mini_app/views/components/custom_button.dart';
@@ -36,8 +34,8 @@ class _LoginCardState extends State<LoginCard> {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return BlocProvider(
-      create: (_) => injector.get<LoginCubit>(),
+    return BlocProvider.value(
+      value: injector.get<LoginCubit>(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           _handleStateChange(state, context);
@@ -159,5 +157,4 @@ class _LoginCardState extends State<LoginCard> {
 
   double _getPaddingBetweenButtonAndLastEditText() =>
       SizeConfig.paddingSizeVertical20 + SizeConfig.paddingSizeVertical12;
-
 }

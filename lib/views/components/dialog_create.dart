@@ -1,3 +1,4 @@
+import 'package:blusalt_mini_app/blocs/answer/answer_list_bloc.dart';
 import 'package:blusalt_mini_app/blocs/create/create_cubit.dart';
 import 'package:blusalt_mini_app/blocs/question/question_bloc.dart';
 import 'package:blusalt_mini_app/data/network/model/question.dart';
@@ -82,21 +83,16 @@ class DialogCreate extends StatelessWidget {
                     ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    child: TextFormField(
+                    child: TextField(
                       controller: textEditingController,
                       keyboardType: TextInputType.multiline,
                       textAlign: TextAlign.start,
                       minLines: 5,
                       maxLines: 10,
+                      // style: textFormFieldLabelStyle(context),
                       decoration: InputDecoration(
                         hintText: _getHintText(),
-                        labelStyle:
-                            Theme.of(context).textTheme.bodyText2!.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryTextColorScheme,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        labelStyle: textFormFieldLabelStyle(context),
                         helperStyle:
                             Theme.of(context).textTheme.bodyText2!.copyWith(
                                   color: Theme.of(context)
@@ -169,15 +165,33 @@ class DialogCreate extends StatelessWidget {
     );
   }
 
+  TextStyle textFormFieldLabelStyle(BuildContext context) {
+    return Theme.of(context).textTheme.bodyText2!.copyWith(
+          color: Theme.of(context).colorScheme.primaryTextColorScheme,
+          fontWeight: FontWeight.w700,
+        );
+  }
+
   void _handleListenerStateChanges(BuildContext context, CreateState state) {
     if (state is UploadedSuccessfully) {
-      injector.get<QuestionBloc>().add(LoadQuestionList());
+      _refreshContent();
       Navigator.pop(context);
     }
     if (state is CreateErrorState) {
+      print(
+          'DIalog create ------------------------ERROR ${state.errorModel.errorMessage}');
       Fluttertoast.showToast(
           msg: 'Error posting ${isAnswer ? 'answer' : 'question'}');
     }
+  }
+
+  void _refreshContent() {
+    if (isAnswer) {
+      injector
+          .get<AnswerListBloc>()
+          .add(LoadAnswerList(questionId: question!.id));
+    } else
+      injector.get<QuestionBloc>().add(LoadQuestionList());
   }
 
   _getHintText() {

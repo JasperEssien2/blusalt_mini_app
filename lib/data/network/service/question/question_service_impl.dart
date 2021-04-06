@@ -26,13 +26,15 @@ class QuestionServiceImpl implements AbstractQuestionService {
 
   @override
   Future<RequestState> postQuestion(String question) {
+    print('POST QUESTION ------------ ${questionEnpoint.askQuestion}');
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
       () => helper.post(
-        authenticationEndpoint.signIn,
+        questionEnpoint.askQuestion,
         body: {
           'question': question,
         },
       ),
+      statusCodeSuccess: 201,
       successResponse: (data) {
         return RequestState.success(data); // returns user's token
       },

@@ -26,6 +26,7 @@ class AnswerServiceImpl implements AnswerService {
 
   @override
   Future<RequestState> postAnswer(String questionId, String answer) {
+    print('POST ANSWER URL ------------------------ ${answerEndpoint.answer}');
     return SimplifyApiConsuming.simplifyEndpointConsumingReturn(
       () => helper.post(
         answerEndpoint.answer,
@@ -34,6 +35,7 @@ class AnswerServiceImpl implements AnswerService {
           'answer': answer,
         },
       ),
+      statusCodeSuccess: 201,
       successResponse: (data) {
         return RequestState.success(data); // returns user's token
       },

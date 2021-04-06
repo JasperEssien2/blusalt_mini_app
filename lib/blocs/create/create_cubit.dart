@@ -28,6 +28,7 @@ class CreateCubit extends Cubit<CreateState> {
     createUIModel.setLoadingStatus(true);
     RequestState requestState =
         await _makeRequestToCreate(questionId, isAnswer);
+
     if (requestState is SuccessState) {
       emit(UploadedSuccessfully());
       _updateUIOnRequestSuccess();
@@ -46,6 +47,7 @@ class CreateCubit extends Cubit<CreateState> {
           await answerRepository.postAnswer(questionId, createUIModel.text);
     else
       requestState = await questionRepository.postQuestion(createUIModel.text);
+    print('CREATE CUBIT RESPONSE --------------- ${requestState.toString()}');
     return requestState;
   }
 
