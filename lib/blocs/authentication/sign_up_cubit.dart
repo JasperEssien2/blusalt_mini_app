@@ -4,7 +4,6 @@ import 'package:blusalt_mini_app/data/network/model/request_models/signup_body.d
 import 'package:blusalt_mini_app/data/network/model/server_error_model.dart';
 import 'package:blusalt_mini_app/data/network/model/state.dart';
 import 'package:blusalt_mini_app/data/network/repository/authentication_repository_impl.dart';
-import 'package:blusalt_mini_app/di/injector_container.dart';
 import 'package:blusalt_mini_app/models/state_changes_model/authentication_ui_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -23,7 +22,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     model.setLoadingStatus(true);
     RequestState requestState = await repository.signUp(model.signupBody);
     if (requestState is SuccessState) {
-      injector.pushNewScope(scopeName: registeredUserScope);
       _login();
 
       emit(SignUpSuccessfulState());
