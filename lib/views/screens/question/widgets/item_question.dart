@@ -202,9 +202,10 @@ class ItemQuestion extends StatelessWidget {
       {required BuildContext context, required String voteAction}) {
     if (injector.get<UserBlocCubit>().response.id == 'anonymous') {
       _showNotAuthenticatedDialog(context);
+    } else {
+      injector.get<QuestionBloc>().add(VoteQuestion(
+          question: question, voteAction: voteAction, questionIndex: index));
     }
-    injector.get<QuestionBloc>().add(VoteQuestion(
-        question: question, voteAction: voteAction, questionIndex: index));
   }
 
   void _showNotAuthenticatedDialog(BuildContext context) {
