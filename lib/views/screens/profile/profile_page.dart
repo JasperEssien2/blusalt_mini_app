@@ -1,3 +1,4 @@
+import 'package:blusalt_mini_app/blocs/answer/answer_list_bloc.dart';
 import 'package:blusalt_mini_app/blocs/question/question_bloc.dart';
 import 'package:blusalt_mini_app/blocs/user/user_bloc_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/user_response.dart';
@@ -69,6 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
     injector
         .get<QuestionBloc>(instanceName: 'profile')
         .add(LoadQuestionList(filterByUserId: user!.id));
+
+    injector
+        .get<AnswerListBloc>(instanceName: 'profile')
+        .add(LoadAnswerList(userId: user!.id));
     super.didChangeDependencies();
   }
 }

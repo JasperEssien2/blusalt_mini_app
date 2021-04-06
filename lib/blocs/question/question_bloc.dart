@@ -35,6 +35,7 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
 
   Stream<QuestionState> _mapLoadQuestionListToEvent(
       LoadQuestionList event) async* {
+    dataPoint.clear();
     yield QuestionListLoadingState();
     model.setLoadingStatus(true);
     RequestState requestState = await _makeQuestionListRequest(event);

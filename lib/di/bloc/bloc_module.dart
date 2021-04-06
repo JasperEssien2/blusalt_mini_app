@@ -20,6 +20,10 @@ Future<void> init(GetIt injector) async {
 void _injectDependenciesRelatedToAnswer(GetIt injector) {
   injector.registerLazySingleton(
       () => AnswerListBloc(answerRepository: injector.get()));
+
+  injector.registerLazySingleton(
+      () => AnswerListBloc(answerRepository: injector.get()),
+      instanceName: 'profile');
 }
 
 void _injectDependenciesRelatedToQuestion(GetIt injector) {

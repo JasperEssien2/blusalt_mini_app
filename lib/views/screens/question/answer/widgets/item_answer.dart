@@ -1,10 +1,8 @@
-import 'package:blusalt_mini_app/blocs/user/user_bloc_cubit.dart';
 import 'package:blusalt_mini_app/data/network/model/answer_response.dart';
 import 'package:blusalt_mini_app/styles/colors.dart';
 import 'package:blusalt_mini_app/utils/size_config_util.dart';
 import 'package:blusalt_mini_app/views/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemAnswer extends StatelessWidget {
   final AnswerResponse answer;
@@ -39,7 +37,7 @@ class ItemAnswer extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () => Navigator.pushNamed(context, Routes.profilePage,
-                      arguments: context.read<UserBlocCubit>().response),
+                      arguments: answer.user),
                   child: Container(
                     width: SizeConfig.heightSize30,
                     height: SizeConfig.heightSize30,

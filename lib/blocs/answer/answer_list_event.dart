@@ -5,10 +5,11 @@ abstract class AnswerListEvent extends Equatable {
 }
 
 class LoadAnswerList extends AnswerListEvent {
-  final String questionId;
+  final String? questionId;
   final String? searchQuery;
+  final String? userId;
 
-  LoadAnswerList({required this.questionId, this.searchQuery});
+  LoadAnswerList({this.questionId, this.searchQuery, this.userId});
 
   @override
   List<Object?> get props => [questionId];
